@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\TodoTask;
 
 class Todo_user extends Authenticatable
 {
@@ -42,4 +43,8 @@ class Todo_user extends Authenticatable
     protected $cast = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function todos(){
+        return $this->hasMany(TodoTask::class, 'user_id');
+    }
 }
