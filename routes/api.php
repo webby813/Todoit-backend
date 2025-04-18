@@ -16,4 +16,6 @@ Route::group(['prefix'=>'v1', 'namespace'=>'App\Http\Controllers\Api\V1'], funct
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('new-todo', [TodoTaskController::class, 'store']);
     });
+
+    Route::get('all-todos', [TodoTaskController::class, 'index']);
 });

@@ -7,9 +7,18 @@ use App\Models\TodoTask;
 use App\Http\Requests\V1\TodoTaskRequest;
 use App\Http\Resources\V1\TodoTaskResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class TodoTaskController extends Controller
 {
+    public function index(Request $request)
+    {
+        $todos = TodoTask::with('user')->get(); // Eager load user relationship
+    
+        return TodoTaskResource::collection($todos);
+    }
+
+
     public function store(TodoTaskRequest $request)
     {
         $todo = Auth::user()->todos()->create($request->validated());

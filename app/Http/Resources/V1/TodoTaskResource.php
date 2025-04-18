@@ -12,8 +12,14 @@ class TodoTaskResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'user' => new UserResource($this->whenLoaded('user')),
+        ];
     }
+    
 }
