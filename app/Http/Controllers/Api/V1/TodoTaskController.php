@@ -13,11 +13,22 @@ class TodoTaskController extends Controller
 {
     public function index(Request $request)
     {
-        $todos = TodoTask::with('user')->get(); // Eager load user relationship
+        $todos = TodoTask::with('user')->get();
     
         return TodoTaskResource::collection($todos);
     }
 
+    public function destroy($id)
+    {
+        $todo = TodoTask::findOrFail($id);
+        if ($todo->user_id !== auth()->id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+    
+        $todo->delete();
+        return response()->json(['message' => 'Todo deleted successfully']);
+    }
+    
 
     public function store(TodoTaskRequest $request)
     {

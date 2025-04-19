@@ -16,7 +16,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $validated = $request->validated();
-        $validated['password'] = Hash::make($validated['password']); // Hash it!
+        $validated['password'] = Hash::make($validated['password']);
     
         return new UserResource(Todo_user::create($validated));
     }
